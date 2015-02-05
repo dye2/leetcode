@@ -1,0 +1,46 @@
+#include <vector>  
+#include <algorithm>  
+#include <functional>     
+#include <iostream>  
+using namespace std;
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int> &numbers, int target) {
+        vector<int> result;
+        vector<int> temp;
+		for(int cur =0;cur<numbers.size();cur++)
+          temp.push_back(numbers[cur]);
+        //sort temp
+        sort( temp.begin( ), temp.end( ), greater<int>( ) );
+        int i = 0 ;
+        int j= temp.size()-1;
+        for(; i<j;)
+        {
+            if(temp[i]+temp[j] == target)
+            {
+               break;
+            }
+            else if(temp[i]+temp[j] > target)
+            {
+                i++;
+            }
+            else if(temp[i]+temp[j] < target)
+            {
+                j--;
+            }
+        }
+        
+        if(temp[i]+temp[j] == target)
+        {
+             for(int k =1;k<=numbers.size();k++)
+             {
+                if( (numbers[k-1] == temp[i]) || (numbers[k-1] == temp[j]) )
+                {
+                     result.push_back(k);
+                }
+             }
+        }
+        return result;
+    }
+};
