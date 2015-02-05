@@ -1,0 +1,48 @@
+//reverse a link list
+class Solution {
+public:
+    ListNode *deleteDuplicates(ListNode *head) {
+		ListNode  temp(0);
+        ListNode* rehead = &temp;
+        int count =0;
+        while(head != NULL)
+        { 
+           if(head->next == NULL)
+           {
+                if(count == 0)
+                {
+                      rehead->next = head;
+                }
+				if(rehead->next != NULL)
+				{
+					rehead->next->next = NULL;
+				}
+                break;
+           }
+           else
+           {
+               if(head->val == head->next->val)
+               {
+                   count++;
+                   head = head->next;
+               }
+               else
+               {
+                   if(count == 0)
+                   {
+                       rehead->next = head;
+                   }
+				   
+                   head = head->next;
+				   if(rehead->next != NULL)
+				   {
+					   rehead->next->next = NULL;
+				   rehead = rehead->next;
+				   }
+                   count = 0;
+               }
+           }
+        }
+		return temp.next;
+    }
+};
