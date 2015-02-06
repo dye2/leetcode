@@ -1,19 +1,19 @@
 class Solution {
 public:
     string minWindow(string S, string T) {
-          int ToFind[256]= {0};
+          int ToFind[58]= {0};
           for(int i=0; i<T.size();i++)
-             ++ToFind[T[i]];
-          int Find[256]= {0};
+             ++ToFind[T[i]-'A'];
+          int Find[58]= {0};
           int len =S.size()+1 , fstart = 0, fend=0;
           bool bFound = false;
           for(int start =0, end =0; start<=end &&end <S.size(); end++)
           {
-              if(ToFind[S[end]] ==0)
+            if(ToFind[S[end]-'A'] ==0)
                   continue;
-              ++Find[S[end]];
+              ++Find[S[end]-'A'];
               bool bMet = true;
-              for(int i=0;i<256;i++)
+              for(int i=0;i<58;i++)
               {
                 if(Find[i] < ToFind[i])
                  {
@@ -25,7 +25,7 @@ public:
               if(bMet)
               {
                   bFound = true;
-				  while(ToFind[S[start]] == 0)
+		  while(ToFind[S[start]-'A'] == 0)
 				    start++;
                   if(end - start < len)
                   {
@@ -33,11 +33,11 @@ public:
                       fend = end;
                       len = end - start;
                   }
-                  --Find[S[start]];
-				  --Find[S[end]];
-				  start++;
-				  while( start <= end && ToFind[S[start]] == 0)
-				    start++;
+                  --Find[S[start]-'A'];
+		  --Find[S[end]-'A'];
+		  start++;
+		  while( start <= end && ToFind[S[start]-'A'] == 0)
+			 start++;
                   end--;
               }
           }
