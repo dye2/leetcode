@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int> &num) {
+        if(num.size() == 1)
+           return 1;
+        sort(num.begin(),num.end());
+        int max = 0;
+        int len =1;
+        for(int i=1;i<num.size();i++)
+        {
+            if(num[i] -num[i-1] == 0)
+              continue;
+            if(num[i] -num[i-1] ==1)
+                len++;
+            else
+            {
+                if(len > max) max =len;
+                len = 1;
+                
+            }
+        }
+        return max > len? max:len;
+    }
+};
