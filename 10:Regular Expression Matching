@@ -1,0 +1,69 @@
+class Solution {
+public:
+    bool doMyJob(const char*s , int s_pos, int s_len , const char* p, int p_pos,int p_len)
+    {
+        if(s_pos >= s_len)
+        {
+            bool result = true;
+            for(;p_pos<p_len;p_pos++)
+            {
+                if(p_pos +1 < p_len && p[p_pos+1] == '*')
+                {
+                    p_pos++;
+                }
+                else
+                {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
+          
+        bool result = false;
+        if(p_pos < p_len)
+        {
+            if(p_pos +1 < p_len && p[p_pos+1] == '*')
+            {
+                
+                if(p_pos+2 < p_len)
+                {
+                    result = doMyJob(s,s_pos,s_len,p,p_pos+2,p_len);
+                    if(!result)
+                    {
+                        if(s[s_pos] ==  p[p_pos] || p[p_pos] == '.')
+                        {
+                            result = doMyJob(s,s_pos+1,s_len,p,p_pos,p_len);
+                        }
+                    }
+                }
+                else
+                {
+                    if(s[s_pos] ==  p[p_pos] || p[p_pos] == '.')
+                    {
+                        result = doMyJob(s,s_pos+1,s_len,p,p_pos,p_len);
+                    }
+                }
+            }
+            else
+            {
+                if(s[s_pos] ==  p[p_pos] || p[p_pos] == '.')
+                {
+                    result = doMyJob(s,s_pos+1,s_len,p,p_pos+1,p_len);
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
+      return result;
+    }
+    
+    bool isMatch(const char *s, const char *p) {
+        
+        int s_len = strlen(s);
+        int p_len = strlen(p);
+        return doMyJob(s,0,s_len,p,0,p_len);
+    }
+};
