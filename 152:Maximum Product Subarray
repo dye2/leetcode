@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int maxProduct(int A[], int n) {
+        
+        int max = A[0];
+        int premin = A[0];
+        int premax = A[0];
+        for(int i =1 ; i<n ;i++)
+        {
+             premax = A[i] * premax;
+             premin = A[i] * premin;
+            
+            if(premax < premin)
+            {
+                int temp3 = premax;
+                premax = premin;
+                premin = temp3;
+            }
+            
+            if(premax < A[i]) premax = A[i];
+            if(premin > A[i]) premin = A[i];
+            
+            if(max < premax)
+               max = premax;
+        }
+        return max;
+    }
+};
