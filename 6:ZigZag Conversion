@@ -1,0 +1,40 @@
+class Solution {
+public:
+    string convert(string s, int nRows) {
+        vector<string> result;
+        if(nRows <=1)
+          return s;
+          
+        for(int i=0;i<nRows;i++)
+        {
+			string temp;
+            result.push_back(temp);
+        }
+        
+        int len = 0;
+        while(len < s.size())
+        {
+            if( (len/(nRows-1)) %2 ==0 )
+            {
+                //on line
+                int line = len - (len/(nRows-1))*(nRows-1);
+                result[line] += (s[len]);
+            }
+            else
+            {
+                int line = (nRows-1) - len%(nRows-1);
+                result[line] += (s[len]);
+                //not on line
+            }
+            len++;
+        }
+        
+        string temp;
+        for(int i=0;i<result.size();i++)
+        {
+            temp += result[i];
+        }
+        return temp;
+    }
+    
+};
