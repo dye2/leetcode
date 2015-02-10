@@ -1,0 +1,126 @@
+class Solution {
+public:
+    int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
+        vector<int> sub;
+        if(gas.size() == 0)
+             return -1;
+             
+        for(int i =0 ; i<gas.size();i++)
+        {
+            int temp =gas[i]-cost[i];
+            sub.push_back(temp);
+        }
+        
+        int max = sub[0];
+        int preMax = max;
+        int precount = 1;
+        int end = 0;
+        int count = precount;
+        for(int i =1 ; i<sub.size();i++)
+        {
+            int curMax = sub[i];
+            if(preMax >0)
+            {
+                curMax = preMax + curMax;
+                precount++;
+            }
+            else
+            {
+                precount =1;
+            }
+            
+            if(curMax > max)
+            {
+                max = curMax;
+                end = i;
+                count = precount;
+            }
+            
+            preMax = curMax; 
+        }
+        
+        int begin = end- count +1;
+        
+        if(begin != 0)
+        {
+            for(int i = 0; i<begin;i++)
+            {
+                sub.push_back(sub[i]);
+            }
+            
+            preMax = max;
+            for(int i = end+1 ; i<sub.size();i++)
+            {
+                int curMax = sub[i];
+                if(preMax >0)
+                {
+                    curMax = preMax + curMax;
+                    precount++;
+                }
+                else
+                {
+                    precount = 1;
+                }
+                
+                if(curMax > max)
+                {
+                    max = curMax;
+                    end = i;
+                    count = precount;
+                }
+				 preMax = curMax; 
+            }
+        }
+		else if(end < sub.size()-1)
+		{
+			for(int i = 0; i<=end;i++)
+            {
+                sub.push_back(sub[i]);
+            }
+
+			preMax = max;
+            for(int i = end+1 ; i<sub.size();i++)
+            {
+                int curMax = sub[i];
+                if(preMax >0)
+                {
+                    curMax = preMax + curMax;
+                    precount++;
+                }
+                else
+                {
+                    precount = 1;
+                }
+                
+                if(curMax > max)
+                {
+                    max = curMax;
+                    end = i;
+                    count = precount;
+                }
+				preMax = curMax; 
+            }
+		}
+        
+        begin = end- count +1;
+         
+        begin = begin % gas.size();
+        
+        int sum =0;
+        for(int i = begin;i< gas.size();i++)
+        {
+            sum += sub[i];
+            if(sum < 0)
+              return -1;
+        }
+        
+        for(int i =  0; i<begin;i++)
+        {
+            sum += sub[i];
+            if(sum < 0)
+              return -1;
+        }
+        
+        return begin;
+    }
+};
