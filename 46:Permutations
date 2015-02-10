@@ -1,0 +1,30 @@
+class Solution {
+public:
+    
+    void dojob(vector<int>& num , int begin, int size ,vector<vector<int> >& result)
+    {
+       if(begin >= size)
+            result.push_back(num);
+       else
+    	{
+    	    vector<int> temp = num;
+    		dojob(num,begin+1,size,result);
+    		for(int i = begin+1; i<size;i++)
+    		{
+    		    num = temp;
+    			if(num[begin] == num[i])
+    				continue;
+    			int temp = num[begin];
+    			num[begin] = num[i];
+    			num[i] = temp;
+    			dojob(num,begin+1,size,result);
+    		}
+    	
+    	}
+    }
+    vector<vector<int> > permute(vector<int> &num) {
+         vector<vector<int> > result;
+         dojob(num,0,num.size(),result);
+         return result;
+    }
+};
