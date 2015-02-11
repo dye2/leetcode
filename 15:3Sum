@@ -1,0 +1,83 @@
+#include <vector>
+#include <string>
+#include <utility> 
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int> > threeSum(vector<int> &num) {
+         vector<vector<int> > result;
+         sort(num.begin(),num.end());
+         int len = num.size();
+         int bfi = true;
+         int pre;
+         for(int i=0;i<len;i++)
+         {
+             if(bfi)
+             {
+                 bfi = false;
+                 pre = num[0];
+             }
+             else
+             {
+                 if(pre == num[i])
+                   continue;
+             }
+             
+             int m=i+1;
+             int n=len-1;
+             int pre1;
+             int pre2;
+             bool bfound = false;
+             int tar = -1* num[i];
+             while(m <n)
+             {
+                 if(m== i || (bfound && num[m] == pre1))
+                 {
+                     m++;
+                     continue;
+                 }
+                 
+                 if(n== i || (bfound && num[n] == pre2))
+                 {
+                     n--;
+                     continue;
+                 }
+                 
+                 int sum = num[m] + num[n];
+                 if(sum == tar )
+                 {
+                     bfound = true;
+                     int add1 = num[m];
+                     int add3 = num[n];
+                     int add2 = num[i];
+                     if(add1 > add2) swap(add1,add2);
+                     if(add2 > add3) swap(add2, add3);
+                     vector<int> item;
+                     item.push_back(add1);
+                     item.push_back(add2);
+                     item.push_back(add3);
+                     result.push_back(item);
+                     pre1 = num[m];
+                     pre2 = num[n];
+                     m++;
+                     n--;
+
+                 }
+                 else if(sum > tar)
+                 {
+                     n--;
+                 }
+                 else if(sum < tar)
+                 {
+                     m++;
+                 }
+             }
+             pre = num[i];
+         }
+         
+         return result;
+    }
+};
