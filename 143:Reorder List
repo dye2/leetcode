@@ -1,0 +1,58 @@
+class Solution {
+public:
+    void reorderList(ListNode *head) {
+        if(head == NULL || head->next == NULL || head->next->next == NULL)
+          return;
+          
+        ListNode *root = head;
+        ListNode *p1 = head;
+        ListNode *p2 = head->next->next;
+        while(p2->next != NULL)
+        {
+			 p1 = p1->next;
+            p2 = p2->next;
+            if(p2->next != NULL)
+            {
+                p2 = p2->next;
+            }
+        }
+        
+       ListNode* l2 = p1->next;
+       p1->next = NULL;
+       
+       ListNode temp(0);
+       
+       while(l2 != NULL)
+       {
+           ListNode* l2temp = l2->next;
+           l2->next = temp.next;
+           temp.next = l2;
+           l2 = l2temp;
+       }
+       
+       l2 = temp.next;
+       
+       head = root;
+       
+       ListNode* preHead = &temp;
+       while(l2!=NULL && head != NULL)
+       {
+           //preHead = head;
+           ListNode* l2temp = l2->next;
+           ListNode* l1temp = head->next;
+           head->next = l2;
+           l2->next = l1temp;
+		   preHead = l2;
+           l2 = l2temp;
+           head = l1temp;
+       }
+       
+       while(l2!=NULL)
+         {
+             preHead->next = l2;
+             preHead = preHead->next;
+             l2 = l2->next;
+         }
+       head = root;
+    }
+};
